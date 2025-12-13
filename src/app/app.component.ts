@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+declare var $: any; // JQuery için global değişken bildirimi
 
 @Component({
   selector: 'app-root',
@@ -8,3 +9,7 @@ import { Component } from '@angular/core';
 export class AppComponent {
   title = 'ETicaretClient';
 }
+
+$(document).ready(() => {
+  alert("JQuery is working!");
+});
