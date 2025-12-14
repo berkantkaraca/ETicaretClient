@@ -10,6 +10,6 @@ export class AppComponent {
   title = 'ETicaretClient';
 }
 
-$(document).ready(() => {
-  alert("JQuery is working!");
-});
+// $(document).ready(() => {
+//   alert("JQuery is working!");
+// });
