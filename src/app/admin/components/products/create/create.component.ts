@@ -12,7 +12,7 @@ import { ProductService } from 'src/app/services/common/models/product.service';
 })
 export class CreateComponent extends BaseComponent implements OnInit {
 
-   constructor(spiner: NgxSpinnerService, private productService: ProductService, private alertify: AlertifyService) {
+  constructor(spiner: NgxSpinnerService, private productService: ProductService, private alertify: AlertifyService) {
     super(spiner)
   }
 
@@ -33,6 +33,12 @@ export class CreateComponent extends BaseComponent implements OnInit {
       this.alertify.message("Ürün başarıyla eklenmiştir.", {
         dismissOthers: true,
         messageType: MessageType.Success,
+        position: Position.TopRight
+      });
+    }, errorMessage => {
+      this.alertify.message(errorMessage, {
+        dismissOthers: true,
+        messageType: MessageType.Error,
         position: Position.TopRight
       });
     });
