@@ -44,6 +44,8 @@ export class SelectProductImageDialogComponent extends BaseDialog<SelectProductI
     this.images = await this.productService.readImages(this.data as string, () => this.spinner.hide(SpinnerType.BallAtom));
   }
 
+  //TODO: silme işlemi gerçekleşince ilgili card gizlenmiyor.d
+  //TODO: silme işleminden sonra resim listesi güncellenmiyor.
   async deleteImage(imageId: string, event: any) {
     this.dialogService.openDialog({
       componentType: DeleteDialogComponent,
