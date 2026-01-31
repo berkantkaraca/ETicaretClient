@@ -3,6 +3,7 @@ import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { SpinnerType } from 'src/app/base/base.component';
+import { _isAuthenticated } from 'src/app/services/common/auth.service';
 import { CustomToastrService, ToastrMessageType, ToastrPosition } from 'src/app/services/ui/custom-toastr.service';
 
 @Injectable({
@@ -13,7 +14,7 @@ export class AuthGuard implements CanActivate {
     private jwtHelper: JwtHelperService,
     private router: Router,
     private toastrService: CustomToastrService,
-    private spinner: NgxSpinnerService
+    private spinner: NgxSpinnerService,
   ) {
 
   }
@@ -21,26 +22,16 @@ export class AuthGuard implements CanActivate {
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     this.spinner.show(SpinnerType.BallAtom);
 
-    const token: string = localStorage.getItem("accessToken");
-
-    // const decodeToken = this.jwtHelper.decodeToken(token);
-    // const expirationDate: Date = this.jwtHelper.getTokenExpirationDate(token);
-
-    //Gelen token expire olmuş mu kontrolü
-    //Eğer try'da patlarsa (token geçersiz ise) catch bloğuna düşer ve expired true olur
-    let expired: boolean;
-    try {
-     expired = this.jwtHelper.isTokenExpired(token);
-    } catch {
-     expired = true;
-    }
-
-    if(!token || expired) {
+    //auth.service.ts içindeki isAuthenticated özelliğini kullanıyoruz
+    if (!_isAuthenticated) {
       this.router.navigate(["login"], { queryParams: { returnUrl: state.url } });
       this.toastrService.message("Oturum açmanız gerekiyor!", "Yetkisiz Erişim!", {
         messageType: ToastrMessageType.Warning,
         position: ToastrPosition.TopRight
       });
+
+      this.spinner.hide(SpinnerType.BallAtom);
+      return false;
     }
 
     this.spinner.hide(SpinnerType.BallAtom);
