@@ -8,6 +8,7 @@ import { UiModule } from './ui/ui.module';
 import { ToastrModule } from 'ngx-toastr';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { HttpClientModule } from '@angular/common/http';
+import { JwtModule } from '@auth0/angular-jwt';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,14 @@ import { HttpClientModule } from '@angular/common/http';
     UiModule,
     ToastrModule.forRoot(),
     NgxSpinnerModule,
-    HttpClientModule
+    HttpClientModule,
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: () => localStorage.getItem("accessToken"), // accessToken'ı localStorage'dan alır ve otomatik olarak tüm istekleklerde authorization header'ına ekler
+        allowedDomains: ["localhost:7225"], // Token'ı sadece belirlenen domainlere gönderir
+        disallowedRoutes: [] // Token'ın gönderilmeyeceği route'lar
+      }
+    })
   ],
   providers: [
     {provide: "baseUrl", useValue: "https://localhost:7225/api", multi: true}
