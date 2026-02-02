@@ -28,6 +28,9 @@ export class HttpErrorHandlerInterceptorService implements HttpInterceptor {
             messageType: ToastrMessageType.Warning,
             position: ToastrPosition.BottomFullWidth
           });
+
+          this.userAuthService.refreshTokenLogin(localStorage.getItem("refreshToken")).then(data => {
+          });
           break;
 
         case HttpStatusCode.InternalServerError:
@@ -37,21 +40,21 @@ export class HttpErrorHandlerInterceptorService implements HttpInterceptor {
           });
           break;
 
-          case HttpStatusCode.BadRequest:
+        case HttpStatusCode.BadRequest:
           this.toastrService.message("Geçersiz istek yapıldı!", "Geçersiz istek!", {
             messageType: ToastrMessageType.Warning,
             position: ToastrPosition.BottomFullWidth
           });
           break;
 
-          case HttpStatusCode.NotFound:
+        case HttpStatusCode.NotFound:
           this.toastrService.message("Sayfa bulunamadı!", "Sayfa bulunamadı!", {
             messageType: ToastrMessageType.Warning,
             position: ToastrPosition.BottomFullWidth
           });
           break;
 
-          default:
+        default:
           this.toastrService.message("Beklenmeyen bir hata meydana gelmiştir!", "Hata!", {
             messageType: ToastrMessageType.Warning,
             position: ToastrPosition.BottomFullWidth
