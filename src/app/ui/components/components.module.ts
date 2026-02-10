@@ -15,6 +15,9 @@ import { RegisterModule } from './register/register.module';
     BasketsModule,
     RegisterModule,
     // LoginModule // LoginComponent'ı AppModule'de kullandığımız için burada import etmiyoruz
+  ],
+  exports: [
+    BasketsModule
   ]
 })
 export class ComponentsModule { }
