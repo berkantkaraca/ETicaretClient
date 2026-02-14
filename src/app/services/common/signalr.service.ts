@@ -5,6 +5,7 @@ import { HubConnection, HubConnectionBuilder, HubConnectionState } from '@micros
   providedIn: 'root'
 })
 export class SignalRService {
+  constructor(@Inject("baseSignalRUrl") private baseSignalRUrl: string) { }
 
   private _connection: HubConnection;
   get connection(): HubConnection {
@@ -13,6 +14,8 @@ export class SignalRService {
 
   // SignalR bağlantısını başlatır
   start(hubUrl: string) {
+    hubUrl = this.baseSignalRUrl + hubUrl;
+
     if (!this.connection || this._connection?.state == HubConnectionState.Disconnected) {
       const builder: HubConnectionBuilder = new HubConnectionBuilder();
 
